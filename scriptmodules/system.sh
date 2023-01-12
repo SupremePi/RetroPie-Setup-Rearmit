@@ -670,6 +670,6 @@ function platform_rk3399() {
 }
 
 function platform_rk3588() {
-    cpu_armv8 "cortex-a76"
+    cpu_armv8 "cortex-a76.cortex-a55"
     __platform_flags+=(armbian kms gles gles3 gles31)
 }
