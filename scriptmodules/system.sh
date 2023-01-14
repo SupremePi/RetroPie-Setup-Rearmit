@@ -439,6 +439,9 @@ function get_platform() {
                         *rk3399*)
                            __platform="rk3399"
                            ;;
+                        *rk3588*)
+                           __platform="rk3588"
+                           ;;
                     esac
                 elif [[ -e "/sys/devices/soc0/family" ]]; then
                     case "$(tr -d '\0' < /sys/devices/soc0/family)" in
@@ -663,5 +666,10 @@ function platform_sun50i-h616() {
 
 function platform_rk3399() {
     cpu_armv8 "cortex-a53"
+    __platform_flags+=(armbian kms gles gles3 gles31)
+}
+
+function platform_rk3588() {
+    cpu_armv8 "cortex-a76.cortex-a55"
     __platform_flags+=(armbian kms gles gles3 gles31)
 }
