@@ -1,3 +1,5 @@
 [submodule "ext/rearmit"]
 	path = ext/rearmit
 	url = https://github.com/Rearmit/Rearmit
+	branch = main
+	
