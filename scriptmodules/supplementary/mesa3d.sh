@@ -12,7 +12,7 @@
 rp_module_id="mesa3d"
 rp_module_desc="mesa3d - userspace library for mesa3d for panfrost and lima"
 rp_module_licence="MIT https://www.mesa3d.org/license.html"
-rp_module_repo="git https://github.com/mesa3d/mesa mesa-22.2.4"
+rp_module_repo="git https://gitlab.freedesktop.org/mesa/mesa.git mesa-22.3.3"
 rp_module_section="depends"
 rp_module_flags="armbian"
 
