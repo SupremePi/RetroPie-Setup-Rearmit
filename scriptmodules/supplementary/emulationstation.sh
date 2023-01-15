@@ -207,7 +207,7 @@ function install_emulationstation() {
 
     if isPlatform "armbian"; then
         mkRomDir "music"
-        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "$romdir/music"
+        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "$romdir"
     fi
 }
 
@@ -301,6 +301,9 @@ function remove_emulationstation() {
     rm -f "/usr/bin/emulationstation"
     if isPlatform "x11"; then
         rm -rfv "/usr/local/share/icons/retropie.svg" "/usr/local/share/applications/retropie.desktop"
+    fi
+    if isPlatform "armbian"; then
+        rm -r "$romdir/music"
     fi
 }
 
