@@ -32,7 +32,7 @@ function build_libdrm() {
     params+=(-Dintel=disabled -Dradeon=disabled \
             -Damdgpu=disabled -Dexynos=disabled \
             -Dnouveau=disabled -Dvmwgfx=disabled \
-            -Domap=disabled -Dfreedreno=fadisabledlse \
+            -Domap=disabled -Dfreedreno=disabled \
             -Dtegra=disabled -Detnaviv=disabled -Dvc4=disabled)
 
     meson builddir --prefix=/usr/local "${params[@]}"
