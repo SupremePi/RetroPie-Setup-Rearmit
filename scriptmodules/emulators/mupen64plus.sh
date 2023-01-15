@@ -400,17 +400,42 @@ function configure_mupen64plus() {
     fi
 
     if isPlatform "armbian"; then
+        iniConfig " = " "" "$config"
         if ! grep -q "\[Video-General\]" "$config"; then
             echo "[Video-General]" >> "$config"
         fi
         iniSet "VerticalSync" "True"
-
-
         # Create GlideN64 section in .cfg
+        if ! grep -q "\[Video-GLideN64\]" "$config"; then
+            echo "[Video-GLideN64]" >> "$config"
+        fi
+        # Settings version. Don't touch it.
+        iniSet "configVersion" "17"
+        # Bilinear filtering mode (0=N64 3point, 1=standard)
+        iniSet "bilinearMode" "1"
+        iniSet "EnableFBEmulation" "True"
+        # Use native res
+        iniSet "UseNativeResolutionFactor" "1"
+        # Enable legacy blending
+        iniSet "EnableLegacyBlending" "True"
+        # Enable Threaded GL calls
+        iniSet "ThreadedVideo" "True"
+        # Swap frame buffers On buffer update (most performant)
+        iniSet "BufferSwapMode" "2"
+        # Disable hybrid upscaling filter (needs better GPU)
+        iniSet "EnableHybridFilter" "False"
+        # Use fast but less accurate shaders. Can help with low-end GPUs.
+        iniSet "EnableInaccurateTextureCoordinates" "True"
+        if ! grep -q "\[Video-General\]" "$config"; then
+            echo "[Video-General]" >> "$config"
+        fi
+        iniSet "VerticalSync" "True"
+        # Create Video-Rice section in .cfg
         if ! grep -q "\[Video-Rice\]" "$config"; then
             echo "[Video-Rice]" >> "$config"
         fi
         iniSet "ScreenUpdateSetting" "7"
+        iniSet "NormalAlphaBlender" "True"
     fi
 
     addAutoConf mupen64plus_hotkeys 1
