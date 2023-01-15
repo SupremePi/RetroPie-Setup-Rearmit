@@ -157,8 +157,11 @@ function _get_branch_emulationstation() {
 
 function sources_emulationstation() {
     gitPullOrClone
-    applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.02-PR725-background-music-player.patch"
-    applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.03-sound-menu.patch"
+
+    if isPlatform "armbian"; then
+        applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.02-PR725-background-music-player.patch"
+        applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.03-sound-menu.patch"
+    fi
 }
 
 function build_emulationstation() {
@@ -200,6 +203,12 @@ function install_emulationstation() {
     # This folder is present only from 2.8.x, don't include it for older releases
     if [[ "$__os_debian_ver" -gt 8 ]]; then
         md_ret_files+=('resources')
+    fi
+
+    if isPlatform "armbian"; then
+        mkRomDir "music"
+        "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.02-PR725-background-music-player.patch"
+        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "/opt/retropie/music"
     fi
 }
 
