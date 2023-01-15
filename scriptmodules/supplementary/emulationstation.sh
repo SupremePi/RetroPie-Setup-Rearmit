@@ -207,7 +207,6 @@ function install_emulationstation() {
 
     if isPlatform "armbian"; then
         mkRomDir "music"
-        "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.02-PR725-background-music-player.patch"
         cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "/opt/retropie/music"
     fi
 }
