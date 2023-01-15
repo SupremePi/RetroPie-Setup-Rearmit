@@ -133,6 +133,7 @@ function depends_emulationstation() {
         libfreeimage-dev libfreetype6-dev
         libcurl4-openssl-dev libasound2-dev cmake libsdl2-dev libsm-dev
         libvlc-dev libvlccore-dev vlc
+        libsdl2-mixer-dev
     )
 
     [[ "$__os_debian_ver" -gt 8 ]] && depends+=(rapidjson-dev)
@@ -156,6 +157,9 @@ function _get_branch_emulationstation() {
 
 function sources_emulationstation() {
     gitPullOrClone
+    applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.02-PR725-background-music-player.patch"
+    applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.03-sound-menu.patch"
+    applyPatch "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/emulationstation-100.04-music-folder-paths.patch"
 }
 
 function build_emulationstation() {
