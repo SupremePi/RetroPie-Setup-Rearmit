@@ -28,6 +28,12 @@ function sources_libdrm() {
 
 function build_libdrm() {
     local params=()
+    
+    params+=(-Dintel=disabled -Dradeon=disabled \
+            -Damdgpu=disabled -Dexynos=disabled \
+            -Dnouveau=disabled -Dvmwgfx=disabled \
+            -Domap=disabled -Dfreedreno=disabled \
+            -Dtegra=disabled -Detnaviv=disabled -Dvc4=disabled)
 
     meson builddir --prefix=/usr/local "${params[@]}"
     ninja -C builddir
