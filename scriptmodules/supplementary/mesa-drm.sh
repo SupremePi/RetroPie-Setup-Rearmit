@@ -35,11 +35,13 @@ function build_mesa-drm() {
                            -Dnouveau=false -Dvmwgfx=false \
                            -Domap=false -Dfreedreno=false \
                            -Dtegra=false -Detnaviv=false -Dvc4=true)
+
     isPlatform "armbian" && params+=(-Dintel=false -Dradeon=false \
                            -Damdgpu=false -Dexynos=false \
                            -Dnouveau=false -Dvmwgfx=false \
                            -Domap=false -Dfreedreno=false \
-                           -Dtegra=false -Detnaviv=false -Dvc4=fasle)
+                           -Dtegra=false -Detnaviv=false -Dvc4=false)
+
     meson builddir --prefix="$md_inst" "${params[@]}"
     ninja -C builddir
 

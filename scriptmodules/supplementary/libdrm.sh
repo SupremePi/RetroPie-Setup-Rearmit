@@ -33,7 +33,7 @@ function build_libdrm() {
             -Damdgpu=false -Dexynos=false \
             -Dnouveau=false -Dvmwgfx=false \
             -Domap=false -Dfreedreno=false \
-            -Dtegra=false -Detnaviv=false -Dvc4=fasle)
+            -Dtegra=false -Detnaviv=false -Dvc4=false)
 
     meson builddir --prefix=/usr/local "${params[@]}"
     ninja -C builddir
