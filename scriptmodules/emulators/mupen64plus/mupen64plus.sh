@@ -443,7 +443,7 @@ elif [[ -e /opt/vero3/lib/libMali.so  ]]; then
 elif [[ -e /etc/armbian-release  ]]; then
     SDL_AUDIODRIVER=alsa
 else
-    SDL_AUDIODRIVER=pulse
+    SDL_AUDIODRIVER=alsa
 fi
 
 SDL_AUDIODRIVER=${SDL_AUDIODRIVER} SDL_VIDEO_RPI_SCALE_MODE=${SDL_VIDEO_RPI_SCALE_MODE} "$rootdir/emulators/mupen64plus/bin/mupen64plus" --noosd $PARAMS ${WINDOW_MODE} --rsp ${RSP_PLUGIN}.so --gfx ${VIDEO_PLUGIN}.so --audio ${AUDIO_PLUGIN}.so --configdir "$configdir/n64" --datadir "$configdir/n64" "$ROM"
