@@ -27,7 +27,7 @@ function _update_hook_advmame() {
 }
 
 function depends_advmame() {
-    local depends=(autoconf automake)
+    local depends=(autoconf automake libexpat1-dev)
     if isPlatform "videocore"; then
         depends+=(libsdl1.2-dev libraspberrypi-dev)
     else
