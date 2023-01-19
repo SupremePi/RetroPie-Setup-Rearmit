@@ -615,6 +615,14 @@ function basic_install_setup() {
     return 0
 }
 
+function opt_install_setup() {
+    local id
+    for id in $(rp_getSectionIds opt); do
+        rp_installModule "$id"
+    done
+    return 0
+}
+
 function packages_gui_setup() {
     local section
     local default
