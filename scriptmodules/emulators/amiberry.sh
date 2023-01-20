@@ -42,6 +42,14 @@ function _get_platform_amiberry() {
         platform="tinker"
     elif isPlatform "vero4k"; then
         platform="vero4k"
+    elif isPlatform "sun8i-h3"; then
+        platform="orangepi-pc"
+    elif isPlatform "sun50i-h6"; then
+        platform="RK3328"
+    elif isPlatform "sun50i-h616"; then
+        platform="RK3328"
+    elif isPlatform "rk3399"; then
+        platform="RK3399"
     fi
     echo "$platform"
 }
