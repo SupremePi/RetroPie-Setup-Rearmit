@@ -1684,7 +1684,7 @@ function adminRsync() {
 function signFile() {
     local file="$1"
     local cmd_out
-    [[ ! -v __gpg_passphrase_file ]] && __gpg_passphrase_file="/tmp/overlay/passphrase"
+    [[ ! -v __gpg_passphrase_file ]] && __gpg_passphrase_file="/mnt/passphrase"
     if [[ -f "$__gpg_passphrase_file" ]]; then
         cmd_out=$(gpg --pinentry-mode loopback --passphrase-file="$__gpg_passphrase_file" --default-key "$__gpg_signing_key" --detach-sign --armor --yes "$1" 2>&1)
     else
