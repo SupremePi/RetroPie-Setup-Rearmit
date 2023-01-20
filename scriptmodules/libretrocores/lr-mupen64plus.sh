@@ -56,6 +56,14 @@ function build_lr-mupen64plus() {
     local params=()
     if isPlatform "videocore"; then
         params+=(platform="$__platform")
+    elif isPlatform "sun8i-h3"; then
+        params+=(WITH_DYNAREC=arm)
+        params+=(HAVE_NEON=1)
+        params+=(platform="armv")
+    elif isPlatform "sun50i-h6"; then
+        params+=(platform="arm64_cortex_a53_gles2")
+    elif isPlatform "sun50i-h616"; then
+        params+=(platform="arm64_cortex_a53_gles3")
     elif isPlatform "mesa"; then
         params+=(platform="$__platform-mesa")
     elif isPlatform "mali"; then
