@@ -65,8 +65,8 @@ function conf_binary_vars() {
     [[ -z "$__has_binaries" ]] && __has_binaries=0
 
     # set location of binary downloads
-    __binary_host="files.retropie.org.uk"
-    __binary_base_url="https://$__binary_host/binaries"
+    __binary_host="rearm.it/files"
+    __binary_base_url="http://$__binary_host/binaries"
 
     __binary_path="$__os_codename/$__platform"
     isPlatform "kms" && __binary_path+="/kms"
@@ -75,14 +75,14 @@ function conf_binary_vars() {
     __archive_url="https://files.retropie.org.uk/archives"
 
     # set the gpg key used by RetroPie
-    __gpg_retropie_key="retropieproject@gmail.com"
+    __gpg_retropie_key="gleam2003@msn.com"
 
     # if __gpg_signing_key is not set, set to __gpg_retropie_key
     [[ ! -v __gpg_signing_key ]] && __gpg_signing_key="$__gpg_retropie_key"
 
     # if the RetroPie public key is not installed, install it.
     if ! gpg --list-keys "$__gpg_retropie_key" &>/dev/null; then
-        gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys DC9D77FF8208FFC51D8F50CCF1B030906A3B0D31
+        gpg --import "$home/RetroPie-Setup/public.key"
     fi
 }
 
@@ -203,7 +203,11 @@ function get_os_version() {
             # we provide binaries for RPI on Raspbian 9/10
             if isPlatform "rpi" && \
                isPlatform "32bit" && \
-               [[ "$__os_debian_ver" -gt 9 && "$__os_debian_ver" -lt 11 ]]; then
+               compareVersions "$__os_debian_ver" gt 9 && compareVersions "$__os_debian_ver" lt 11; then
+               # only set __has_binaries if not already set
+               [[ -z "$__has_binaries" ]] && __has_binaries=1
+            fi
+            if isPlatform "armbian"; then
                # only set __has_binaries if not already set
                [[ -z "$__has_binaries" ]] && __has_binaries=1
             fi
@@ -487,7 +491,7 @@ function get_platform() {
 }
 
 function set_platform_defaults() {
-    __default_opt_flags="-O2"
+    __default_opt_flags="-O3"
 
     # add platform name and 32bit/64bit to platform flags
     __platform_flags=("$__platform" "$(getconf LONG_BIT)bit")
