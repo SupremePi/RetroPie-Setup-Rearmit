@@ -65,7 +65,7 @@ function conf_binary_vars() {
     [[ -z "$__has_binaries" ]] && __has_binaries=0
 
     # set location of binary downloads
-    __binary_host="rearm.it/files"
+    __binary_host="rearm.it/packages"
     __binary_base_url="http://$__binary_host/binaries"
 
     __binary_path="$__os_codename/$__platform"
