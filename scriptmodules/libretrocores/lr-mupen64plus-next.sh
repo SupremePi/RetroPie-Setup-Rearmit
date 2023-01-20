@@ -35,6 +35,9 @@ function build_lr-mupen64plus-next() {
     if isPlatform "arm"; then
         if isPlatform "videocore"; then
             params+=(platform="$__platform")
+        elif isPlatform isPlatform "sun8i-h3"; then
+            params+=(WITH_DYNAREC=arm)
+            params+=(platform="armv")
         elif isPlatform "mesa"; then
             params+=(platform="$__platform-mesa")
         elif isPlatform "mali"; then
@@ -45,6 +48,12 @@ function build_lr-mupen64plus-next() {
         else
             # force disabling HAVE_NEON on armv6 as makefile sets it for all rpi targets
             params+=(HAVE_NEON=0)
+        fi
+    elif isPlatform "aarch64"; then
+        if isPlatform "sun50i-h6"; then
+            params+=(platform="arm64_cortex_a53_gles2")
+        elif isPlatform "sun50i-h616"; then
+            params+=(platform="arm64_cortex_a53_gles3")
         fi
     fi
     if isPlatform "gles3"; then
@@ -79,7 +88,7 @@ function configure_lr-mupen64plus-next() {
     mkRomDir "n64"
     defaultRAConfig "n64"
 
-    if isPlatform "rpi"; then
+    if isPlatform "rpi" || isPlatform "armbian"; then
         # Disable hybrid upscaling filter (needs better GPU)
         setRetroArchCoreOption "mupen64plus-next-HybridFilter" "False"
         # Disable overscan/VI emulation (slight performance drain)
