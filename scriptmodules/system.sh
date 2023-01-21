@@ -434,12 +434,12 @@ function get_platform() {
                         *sun8i-h2*|*sun8i-h3*)
                             __platform="sun8i-h3"
                             ;;
-                        *sun50i-h6*)
-                            __platform="sun50i-h6"
-                            ;;
                         *sun50i-h616*)
                            __platform="sun50i-h616"
                            ;;
+                        *sun50i-h6*)
+                            __platform="sun50i-h6"
+                            ;;
                         *rk3399*)
                            __platform="rk3399"
                            ;;
