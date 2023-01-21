@@ -66,7 +66,7 @@ function conf_binary_vars() {
 
     # set location of binary downloads
     __binary_host="rearm.it/packages"
-    __binary_base_url="http://$__binary_host/binaries"
+    __binary_base_url="https://$__binary_host/binaries"
 
     __binary_path="$__os_codename/$__platform"
     isPlatform "kms" && __binary_path+="/kms"
