@@ -653,7 +653,7 @@ function platform_vero4k() {
 }
 
 function platform_sun8i-h3() {
-    cpu_armv7 "cortex-a7"
+    cpu_armv7
     __platform_flags+=(armbian kms gles)
 }
 
