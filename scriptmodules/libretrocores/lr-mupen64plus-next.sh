@@ -35,7 +35,7 @@ function build_lr-mupen64plus-next() {
     if isPlatform "arm"; then
         if isPlatform "videocore"; then
             params+=(platform="$__platform")
-        elif isPlatform isPlatform "sun8i-h3"; then
+        elif isPlatform "sun8i-h3"; then
             params+=(WITH_DYNAREC=arm)
             params+=(platform="armv")
         elif isPlatform "mesa"; then
