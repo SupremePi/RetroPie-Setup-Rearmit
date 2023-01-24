@@ -47,7 +47,7 @@ function build_lr-flycast() {
         elif isPlatform "vero4k"; then
             params+=("platform=AMLGXL" "ARCH=arm" "ARMV7A_FLAGS=1")
         elif isPlatform "sun8i-h3"; then
-            params+=("platform=AMLGXL" "ARCH=arm" "ARMV7A_FLAGS=1")
+            params+=("platform=sun8i")
         else
             params+=("FORCE_GLES=1")
         fi
