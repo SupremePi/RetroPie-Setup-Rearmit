@@ -26,55 +26,7 @@ function sources_ppsspp-rearmit() {
 }
 
 function build_ppsspp-rearmit() {
-    rpSwap on 1000
-
-    local ppsspp_binary="PPSSPPSDL"
-    local cmake="cmake"
-    if hasPackage cmake 3.6 lt; then
-        build_cmake_ppsspp
-        cmake="$md_build/cmake/bin/cmake"
-    fi
-
-    # build ffmpeg
-    build_ffmpeg_ppsspp "$md_build/ppsspp/ffmpeg"
-
-    # build ppsspp
-    cd "$md_build/ppsspp"
-    rm -rf CMakeCache.txt CMakeFiles
-    local params=()
-    params+=(
-        -DVULKAN=OFF \
-        -DUSE_FFMPEG=ON \
-        -DUSE_SYSTEM_FFMPEG=OFF \
-        -DUSING_FBDEV=ON \
-        -DUSE_WAYLAND_WSI=OFF \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_SYSTEM_NAME=Linux \
-        -DUSE_DISCORD=OFF \
-        -DANDROID=OFF \
-        -DWIN32=OFF \
-        -DAPPLE=OFF \
-        -DUNITTEST=OFF \
-        -DSIMULATOR=OFF \
-        -DUSING_QT_UI=OFF \
-        -DHEADLESS=ON \
-        -DMOBILE_DEVICE=OFF \
-        -DUSING_X11_VULKAN=OFF \
-        -DARM=ON \
-        -DUSING_GLES2=ON \
-        -DUSING_EGL=OFF
-    )
-    if isPlatform "aarch64" ; then
-        params+=(-DARM64=ON)
-    fi
-    params+=(-DCMAKE_C_FLAGS="${CFLAGS/-DEGL_NO_X11=1/-DMESA_EGL_NO_X11_HEADERS=1/}")
-    params+=(-DCMAKE_CXX_FLAGS="${CXXFLAGS}")
-    "$cmake" "${params[@]}" .
-    make clean
-    make
-
-    rpSwap off
-    md_ret_require="$md_build/ppsspp/$ppsspp_binary"
+    build_ppsspp
 }
 
 function install_ppsspp-rearmit() {

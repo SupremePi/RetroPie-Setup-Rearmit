@@ -154,6 +154,35 @@ function build_ppsspp() {
         params+=(-DLIBRETRO=On)
         ppsspp_binary="lib/ppsspp_libretro.so"
     fi
+    if [[ "$md_id" == "ppsspp-rearmit" ]]; then
+        params=(
+            -DVULKAN=OFF \
+            -DUSE_FFMPEG=ON \
+            -DUSE_SYSTEM_FFMPEG=OFF \
+            -DUSING_FBDEV=ON \
+            -DUSE_WAYLAND_WSI=OFF \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_SYSTEM_NAME=Linux \
+            -DUSE_DISCORD=OFF \
+            -DANDROID=OFF \
+            -DWIN32=OFF \
+            -DAPPLE=OFF \
+            -DUNITTEST=OFF \
+            -DSIMULATOR=OFF \
+            -DUSING_QT_UI=OFF \
+            -DHEADLESS=ON \
+            -DMOBILE_DEVICE=OFF \
+            -DUSING_X11_VULKAN=OFF \
+            -DARM=ON \
+            -DUSING_GLES2=ON \
+            -DUSING_EGL=OFF
+        )
+        if isPlatform "aarch64" ; then
+            params+=(-DARM64=ON)
+        fi
+        params+=(-DCMAKE_C_FLAGS="${CFLAGS/-DEGL_NO_X11=1/-DMESA_EGL_NO_X11_HEADERS=1/}")
+        params+=(-DCMAKE_CXX_FLAGS="${CXXFLAGS}")
+    fi
     "$cmake" "${params[@]}" .
     make clean
     make
