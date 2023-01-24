@@ -46,6 +46,8 @@ function build_lr-flycast() {
             add_flags+=("-I/opt/vc/include -DTARGET_NO_STENCIL -DLOW_END")
         elif isPlatform "vero4k"; then
             params+=("platform=AMLGXL" "ARCH=arm" "ARMV7A_FLAGS=1")
+        elif isPlatform "sun8i-h3"; then
+            params+=("platform=AMLGXL" "ARCH=arm" "ARMV7A_FLAGS=1")
         else
             params+=("FORCE_GLES=1")
         fi
