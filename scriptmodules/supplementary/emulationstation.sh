@@ -206,8 +206,8 @@ function install_emulationstation() {
     fi
 
     if isPlatform "armbian"; then
-        mkRomDir "music"
-        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "$romdir"
+        mkdir "$configdir/all/emulationstation/music"
+        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "$configdir/all/emulationstation/music"
     fi
 }
 
