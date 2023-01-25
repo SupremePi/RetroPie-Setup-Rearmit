@@ -204,11 +204,6 @@ function install_emulationstation() {
     if [[ "$__os_debian_ver" -gt 8 ]]; then
         md_ret_files+=('resources')
     fi
-
-    if isPlatform "armbian"; then
-        mkdir "$configdir/all/emulationstation/music"
-        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/music"* "$configdir/all/emulationstation/music"
-    fi
 }
 
 function init_input_emulationstation() {
@@ -326,6 +321,11 @@ function configure_emulationstation() {
     copy_inputscripts_emulationstation
 
     install_launch_emulationstation
+
+    if isPlatform "armbian"; then
+        mkdir "$datadir/musics"
+        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/musics"* "$datadir/musics"
+    fi
 
     mkdir -p "/etc/emulationstation"
 

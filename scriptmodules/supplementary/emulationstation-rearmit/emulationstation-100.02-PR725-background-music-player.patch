@@ -740,7 +740,7 @@ index 1d0f8ac495..90b8da17ef 100644
 +	
 +	// check in RetroPie music directory
 +	if(musics.empty())
-+		getMusicIn(Utils::FileSystem::getHomePath() + "/RetroPie/roms/music", musics);
++		getMusicIn(Utils::FileSystem::getHomePath() + "/RetroPie/musics", musics);
 +  
 +	// check in system sound directory
 +	if(musics.empty())
@@ -748,7 +748,7 @@ index 1d0f8ac495..90b8da17ef 100644
 +  
 +	// check in .emulationstation/music directory
 +	if(musics.empty())
-+		getMusicIn(Utils::FileSystem::getHomePath() + "/.emulationstation/music", musics);
++		getMusicIn(Utils::FileSystem::getHomePath() + "/.emulationstation/musics", musics);
 +
 +	if(musics.empty())
 +		return;

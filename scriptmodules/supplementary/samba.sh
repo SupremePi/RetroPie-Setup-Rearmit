@@ -50,7 +50,7 @@ function install_shares_samba() {
     add_share_samba "bios" "$home/RetroPie/BIOS"
     add_share_samba "configs" "$configdir"
     add_share_samba "splashscreens" "$datadir/splashscreens"
-    add_share_samba "music" "$configdir/all/emulationstation/music"
+    add_share_samba "musics" "$datadir/musics"
     restart_samba
 }
 
