@@ -323,8 +323,8 @@ function configure_emulationstation() {
     install_launch_emulationstation
 
     if isPlatform "armbian"; then
-        mkdir "$datadir/musics"
-        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/musics"* "$datadir/musics"
+        mkdir -p "$datadir/musics"
+        cp -r "$scriptdir/scriptmodules/$md_type/emulationstation-rearmit/musics"* "$datadir"
     fi
 
     mkdir -p "/etc/emulationstation"
