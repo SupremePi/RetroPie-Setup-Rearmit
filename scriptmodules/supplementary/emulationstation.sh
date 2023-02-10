@@ -175,8 +175,19 @@ function build_emulationstation() {
     elif isPlatform "armbian"; then
         params+=(-DGLES=On)
     elif isPlatform "x11"; then
-        local gl_ver=$(sudo -u $user glxinfo -B | grep -oP 'Max compat profile version:\s\K.*')
-        compareVersions $gl_ver gt 2.0 && params+=(-DUSE_GL21=On)
+        if isPlatform "gles"; then
+            params+=(-DGLES=On)
+            local gles_ver=$(sudo -u $user glxinfo -B | grep -oP 'Max GLES[23] profile version:\s\K.*')
+            compareVersions $gles_ver lt 2.0  && params+=(-DUSE_GLES1=On)
+        else
+            params+=(-DGL=On)
+            local gl_ver=$(sudo -u $user glxinfo -B | grep -oP 'Max compat profile version:\s\K.*')
+            compareVersions $gl_ver gt 2.0 && params+=(-DUSE_GL21=On)
+        fi
+    elif isPlatform "gles"; then
+        params+=(-DGLES=On)
+    elif isPlatform "gl"; then
+        params+=(-DGL=On)
     fi
     if isPlatform "dispmanx"; then
         params+=(-DOMX=On)
@@ -252,6 +263,9 @@ if [[ "\$(uname --machine)" != *86* ]]; then
         exit 1
     fi
 fi
+
+# use SDL2 wayland video driver if wayland session is detected
+[[ "$XDG_SESSION_TYPE" == "wayland" ]] && export SDL_VIDEODRIVER=wayland
 
 # save current tty/vt number for use with X so it can be launched on the correct tty
 TTY=\$(tty)

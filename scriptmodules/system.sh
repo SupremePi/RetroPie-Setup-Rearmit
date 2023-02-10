@@ -446,6 +446,15 @@ function get_platform() {
                         *rk3588*)
                            __platform="rk3588"
                            ;;
+                        *imx6dl*)
+                            __platform="imx6"
+                            ;;
+                        *imx6q*)
+                            __platform="imx6"
+                            ;;
+                        *imx8mm*)
+                            __platform="imx8mm"
+                            ;;
                     esac
                 elif [[ -e "/sys/devices/soc0/family" ]]; then
                     case "$(tr -d '\0' < /sys/devices/soc0/family)" in
@@ -644,6 +653,13 @@ function platform_armv7-mali() {
 
 function platform_imx6() {
     cpu_armv7 "cortex-a9"
+    [[ -d /sys/class/drm/card0/device/driver/etnaviv ]] && __platform_flags+=(x11 gles mesa)
+}
+
+function platform_imx8mm() {
+    cpu_armv8 "cortex-a53"
+    __platform_flags+=(x11 gles)
+    [[ -d /sys/class/drm/card0/device/driver/etnaviv ]] && __platform_flags+=(mesa)
 }
 
 function platform_vero4k() {
