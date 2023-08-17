@@ -1,26 +1,15 @@
 #!/bin/sh
 
-ROOTDIR=""
-DATADIR=""
-REGEX_VIDEO=""
-REGEX_IMAGE=""
-
-# Load user settings
-. /opt/retropie/configs/all/splashscreen.cfg
-
-is_fkms() {
-    if grep -q okay /proc/device-tree/soc/v3d@7ec00000/status 2> /dev/null || grep -q okay /proc/device-tree/soc/firmwarekms@7e600000/status 2> /dev/null ; then
-        return 0
-    else
-        return 1
-    fi
-}
+ROOTDIR="/opt/retropie"
+DATADIR="/home/pi/RetroPie"
+RANDOMIZE="disabled"
+REGEX_VIDEO="\.avi\|\.mov\|\.mp4\|\.mkv\|\.3gp\|\.mpg\|\.mp3\|\.wav\|\.m4a\|\.aac\|\.ogg\|\.flac"
+REGEX_IMAGE="\.bmp\|\.jpg\|\.jpeg\|\.gif\|\.png\|\.ppm\|\.tiff\|\.webp"
 
 do_start () {
     local config="/etc/splashscreen.list"
     local line
     local re="$REGEX_VIDEO\|$REGEX_IMAGE"
-    local omxiv="/opt/retropie/supplementary/omxiv/omxiv"
     case "$RANDOMIZE" in
         disabled)
             line="$(head -1 "$config")"
@@ -43,7 +32,7 @@ do_start () {
         while ! pgrep "dbus" >/dev/null; do
             sleep 1
         done
-        omxplayer --no-osd -o both -b --layer 10000 "$line"
+        mpv -vo sdl -fs --no-terminal "$line"
     elif $(echo "$line" | grep -q "$REGEX_IMAGE"); then
         if [ "$RANDOMIZE" = "disabled" ]; then
             local count=$(wc -l <"$config")
@@ -51,15 +40,12 @@ do_start () {
             local count=1
         fi
         [ $count -eq 0 ] && count=1
-        [ $count -gt 12 ] && count=12
-
-        # Default duration is 12 seconds, check if configured otherwise
-        [ -z "$DURATION" ] && DURATION=12
-        local delay=$((DURATION/count))
+        [ $count -gt 20 ] && count=20
+        local delay=$((20/count))
         if [ "$RANDOMIZE" = "disabled" ]; then
-            "$omxiv" --once -t $delay -b --layer 1000 -f "$config" >/dev/null 2>&1
+            fbi -T 2 -once -t $delay -noverbose -a -l "$config" >/dev/null 2>&1
         else
-            "$omxiv" --once -t $delay -b --layer 1000 -r "$line" >/dev/null 2>&1
+            fbi -T 2 -once -t $delay -noverbose -a "$line" >/dev/null 2>&1
         fi
     fi
     exit 0
@@ -84,3 +70,5 @@ case "$1" in
         exit 3
         ;;
 esac
+
+:
