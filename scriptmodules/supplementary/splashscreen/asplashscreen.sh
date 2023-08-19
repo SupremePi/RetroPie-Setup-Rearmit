@@ -32,7 +32,7 @@ do_start () {
         while ! pgrep "dbus" >/dev/null; do
             sleep 1
         done
-        mpv -vo sdl -fs --no-terminal "$line"
+        pacmd set-default-sink 2 & mpv -vo sdl -fs --no-terminal "$line" >/dev/null 2>&1
     elif $(echo "$line" | grep -q "$REGEX_IMAGE"); then
         if [ "$RANDOMIZE" = "disabled" ]; then
             local count=$(wc -l <"$config")
