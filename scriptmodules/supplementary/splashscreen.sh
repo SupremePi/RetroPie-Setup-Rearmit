@@ -13,6 +13,7 @@ rp_module_id="splashscreen"
 rp_module_desc="Configure Splashscreen"
 rp_module_section="main"
 rp_module_flags=""
+REGEX_VIDEO="\.avi\|\.mov\|\.mp4\|\.mkv\|\.3gp\|\.mpg\|\.mp3\|\.wav\|\.m4a\|\.aac\|\.ogg\|\.flac"
  
 function _update_hook_splashscreen() {
     # make sure splashscreen is always up to date if updating just RetroPie-Setup
@@ -207,7 +208,7 @@ function preview_splashscreen() {
         2 "View slideshow of all splashscreens"
         3 "Play video splash"
     )
-
+ 
     local path
     local file
     while true; do
@@ -221,15 +222,16 @@ function preview_splashscreen() {
                 1)
                     file=$(choose_splashscreen "$path" "image")
                     [[ -z "$file" ]] && break
-                    fbi -T 2 -a --timeout 1 --once --noverbose --autozoom "$file"
+                    clear; fbi -T 2 -a -noverbose "$file" > /dev/null 2>&1 & read -p "" </dev/tty && kill $(pgrep fbi)
                     ;;
                 2)
                     file=$(mktemp)
-                    find "$path" -type f ! -regex ".*/\..*" ! -regex ".*LICENSE" ! -regex ".*README.*" ! -regex ".*\.sh" | sort > "$file"
+                    find "$path" -type f ! -regex ".*/\..*" ! -regex ".*LICENSE" ! -regex ".*README.*" ! -regex ".*\.sh" ! -regex ".*retropie.pkg.*" | grep -v "$REGEX_VIDEO" | sort > "$file"
                     if [[ -s "$file" ]]; then
-                        fbi -T 2 -a --timeout 1 --once --noverbose --autozoom --list "$file" >/dev/null 2>&1
+                    #L00P# fbi -T 2 -a -t 2 --noverbose --list "$file" & read -p "" </dev/tty && kill $(pgrep fbi)
+		    Uinput=/dev/shm/input.u; echo 'read -p "" </dev/tty && kill $(pgrep fbi) > /dev/null 2>&1 & rm $0 > /dev/null 2>&1' > $Uinput; chmod 755 $Uinput; clear; bash $Uinput & fbi -T 2 -a -t 2 --noverbose --once --list "$file" > /dev/null 2>&1; while pgrep fbi; do sleep 0.1 > /dev/null 2>&1; done; kill -KILL $(ps -eaf | grep "input.u" | awk '{print $2}') > /dev/null 2>&1; rm $Uinput > /dev/null 2>&1
                     else
-                        printMsgs "dialog" "There are no splashscreens installed in $path" >/dev/null 2>&1
+                        printMsgs "dialog" "There are no splashscreens installed in $path"
                     fi
                     rm -f "$file"
                     break
@@ -237,7 +239,8 @@ function preview_splashscreen() {
                 3)
                     file=$(choose_splashscreen "$path" "video")
                     [[ -z "$file" ]] && break
-                    mpv -vo sdl -fs --no-terminal "$file"
+                    #L00P# mpv -vo sdl -fs --audio-device=alsa --loop "$file" & read -p "" </dev/tty && kill $(pgrep mpv)
+		    Uinput=/dev/shm/input.u; echo 'read -p "" </dev/tty && kill $(pgrep mpv) > /dev/null 2>&1 & rm $0 > /dev/null 2>&1' > $Uinput; chmod 755 $Uinput; clear; bash $Uinput & mpv -vo sdl -fs "$file" > /dev/null 2>&1 && kill -KILL $(ps -eaf | grep "input.u" | awk '{print $2}') > /dev/null 2>&1; rm $Uinput > /dev/null 2>&1
                     ;;
             esac
         done
